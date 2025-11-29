@@ -1,0 +1,11 @@
+---
+title: "GNSS simulator"
+---
+
+An attempt to make  GNSS SDR simulator.
+
+## Reference projects
+
+- [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
+- [LimeGPS, LimeSDR version of GPS SDR sim, also archived](https://github.com/osqzss/LimeGPS)
+- [Pokemon implementation of GPS SDR Sim](https://github.com/JiaoXianjun/poke-move)
