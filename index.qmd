@@ -18,3 +18,26 @@ An attempt to make  GNSS SDR simulator.
 - [GNSS SDR](https://gnss-sdr.org/)
   - this is a receiver only
 - [GNSS SDRlib](https://github.com/taroz/GNSS-SDRLIB)
+
+## USB device access
+
+With podman you need to set udev access to the usb devices for your user. On my host system I have ubuntu 24.04 which does not currently (30 Nov 2025) have a `limesuite-udev` pacakge on the myriadrf ppa. However [myriadrf/LimeSuite github](https://github.com/myriadrf/LimeSuite/blob/master/udev-rules/64-limesuite.rules) has a set of udev rules that you can use to create the udev rules for the LimeSDR.
+
+Copy this set of rules into `/dev/udev/rules.d/64-limesuite.rules`.
+
+```
+SUBSYSTEM=="usb", ATTR{idVendor}=="04b4", ATTR{idProduct}=="8613", SYMLINK+="stream-%k", MODE="666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="04b4", ATTR{idProduct}=="00f1", SYMLINK+="stream-%k", MODE="666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="601f", SYMLINK+="stream-%k", MODE="666"
+SUBSYSTEM=="usb", ATTR{idVendor}=="1d50", ATTR{idProduct}=="6108", SYMLINK+="stream-%k", MODE="666"
+SUBSYSTEM=="xillybus", MODE="666"
+
+SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE="0666"
+```
+
+Reload the udev rules with
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+```
