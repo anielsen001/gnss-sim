@@ -8,11 +8,13 @@ An attempt to make  GNSS SDR simulator.
 
 - [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
   - [anielsen001 fork](https://github.com/anielsen001/gps-sdr-sim)
+  - [LimeSDR video spoofing a phone](https://www.youtube.com/watch?v=fAaiNOZmM20)
 - [LimeGPS, LimeSDR version of GPS SDR sim, also archived](https://github.com/osqzss/LimeGPS)
   - [anielsen001 fork](https://github.com/anielsen001/LimeGPS)
 - [Pokemon implementation of GPS SDR Sim](https://github.com/JiaoXianjun/poke-move)
   - [anielsen001 fork](https://github.com/anielsen001/poke-move)
 - [Multi SDR GPS Sim](https://github.com/Mictronics/multi-sdr-gps-sim)
-  - cites [hrfGPS](https://github.com/IvanKor/hrfGPS) by Ivan Kor
+	- cites [hrfGPS](https://github.com/IvanKor/hrfGPS) by Ivan Kor 
 - [GNSS SDR](https://gnss-sdr.org/)
   - this is a receiver only
+- [GNSS SDRlib](https://github.com/taroz/GNSS-SDRLIB)
