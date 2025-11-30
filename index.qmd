@@ -12,3 +12,7 @@ An attempt to make  GNSS SDR simulator.
   - [anielsen001 fork](https://github.com/anielsen001/LimeGPS)
 - [Pokemon implementation of GPS SDR Sim](https://github.com/JiaoXianjun/poke-move)
   - [anielsen001 fork](https://github.com/anielsen001/poke-move)
+- [Multi SDR GPS Sim](https://github.com/Mictronics/multi-sdr-gps-sim)
+  - cites [hrfGPS](https://github.com/IvanKor/hrfGPS) by Ivan Kor
+- [GNSS SDR](https://gnss-sdr.org/)
+  - this is a receiver only
