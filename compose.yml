@@ -1,12 +1,9 @@
 
 services:
   limegps:
-    #cap_add:
-    #  - SYS_CHOWN
     init: true
     environment:
       DISPLAY:
-      #PULSE_SERVER: /run/pulse/native # this must match below
     build: 
      context: .
      dockerfile: Containerfile
@@ -53,8 +50,10 @@ services:
       - "/dev/snd:/dev/snd"
     devices:
       - "/dev/dri:/dev/dri"
+      # with `lsusb` LimeSDR mini looks similar to:
+      # Bus 002 Device 002: ID 0403:601f Future Technology Devices International, Ltd FT601 32-bit FIFO IC
       #- "/dev/bus/usb/001/006" # this may change when you plug/unplug device
-      - "/dev/bus/usb/002/004" # this may change when you plug/unplug device
+      - "/dev/bus/usb/002/002" # this may change when you plug/unplug device
     network_mode: "host"
     command:
       - /bin/bash
