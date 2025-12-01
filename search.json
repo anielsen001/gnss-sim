@@ -1,0 +1,30 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "GNSS simulator",
+    "section": "",
+    "text": "An attempt to make a GNSS SDR simulator and use it for testing balloon tracker payloads. This is based on an archived LimeGPS simulator since I have a LimeSDR. I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:\nor pull the container\nand run it\nyou can likely substitute docker for podman."
+  },
+  {
+    "objectID": "index.html#sec-usb-dev-access",
+    "href": "index.html#sec-usb-dev-access",
+    "title": "GNSS simulator",
+    "section": "USB device access",
+    "text": "USB device access\nWith podman you need to set udev access to the usb devices for your user. On my host system I have ubuntu 24.04 which does not currently (30 Nov 2025) have a limesuite-udev pacakge on the myriadrf ppa. However myriadrf/LimeSuite github has a set of udev rules that you can use to create the udev rules for the LimeSDR.\nCopy this set of rules into /dev/udev/rules.d/64-limesuite.rules.\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"04b4\", ATTR{idProduct}==\"8613\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"04b4\", ATTR{idProduct}==\"00f1\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"0403\", ATTR{idProduct}==\"601f\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"1d50\", ATTR{idProduct}==\"6108\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"xillybus\", MODE=\"666\"\n\nSUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6001\", MODE=\"0666\"\nReload the udev rules with\nsudo udevadm control --reload-rules\nsudo udevadm trigger"
+  },
+  {
+    "objectID": "index.html#reference-projects",
+    "href": "index.html#reference-projects",
+    "title": "GNSS simulator",
+    "section": "Reference projects",
+    "text": "Reference projects\n\nGPS SDR Sim, archived project\n\nanielsen001 fork\nLimeSDR video spoofing a phone\n\nLimeGPS, LimeSDR version of GPS SDR sim, also archived\n\nanielsen001 fork\n\nPokemon implementation of GPS SDR Sim\n\nanielsen001 fork\n\nMulti SDR GPS Sim\n\ncites hrfGPS by Ivan Kor\n\nGNSS SDR\n\nthis is a receiver only\n\nGNSS SDRlib"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "A GNSS simulator.\n\n\n\n Back to top"
+  }
+]
