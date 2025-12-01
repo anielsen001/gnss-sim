@@ -2,24 +2,21 @@
 title: "GNSS simulator"
 ---
 
-An attempt to make  GNSS SDR simulator.
+An attempt to make a GNSS SDR simulator and use it for testing [balloon tracker payloads](https://github.com/anielsen001/high-altitude-balloon). This is based on an archived [LimeGPS simulator](https://github.com/osqzss/LimeGPS) since I have a LimeSDR. I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:
+```bash
+podman-compose -f compose.yml build limegps
+```
+or pull the container
+```bash
+podman pull ghcr.io/anielsen001/gnss-sim:latest
+```
+and run it
+```bash
+podman-compose -f compose.yml run limegps
+```
+you can likely substitute `docker` for `podman`. 
 
-## Reference projects
-
-- [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
-  - [anielsen001 fork](https://github.com/anielsen001/gps-sdr-sim)
-  - [LimeSDR video spoofing a phone](https://www.youtube.com/watch?v=fAaiNOZmM20)
-- [LimeGPS, LimeSDR version of GPS SDR sim, also archived](https://github.com/osqzss/LimeGPS)
-  - [anielsen001 fork](https://github.com/anielsen001/LimeGPS)
-- [Pokemon implementation of GPS SDR Sim](https://github.com/JiaoXianjun/poke-move)
-  - [anielsen001 fork](https://github.com/anielsen001/poke-move)
-- [Multi SDR GPS Sim](https://github.com/Mictronics/multi-sdr-gps-sim)
-	- cites [hrfGPS](https://github.com/IvanKor/hrfGPS) by Ivan Kor 
-- [GNSS SDR](https://gnss-sdr.org/)
-  - this is a receiver only
-- [GNSS SDRlib](https://github.com/taroz/GNSS-SDRLIB)
-
-## USB device access
+## USB device access {#sec-usb-dev-access}
 
 With podman you need to set udev access to the usb devices for your user. On my host system I have ubuntu 24.04 which does not currently (30 Nov 2025) have a `limesuite-udev` pacakge on the myriadrf ppa. However [myriadrf/LimeSuite github](https://github.com/myriadrf/LimeSuite/blob/master/udev-rules/64-limesuite.rules) has a set of udev rules that you can use to create the udev rules for the LimeSDR.
 
@@ -41,3 +38,20 @@ Reload the udev rules with
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
+
+## Reference projects
+
+- [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
+  - [anielsen001 fork](https://github.com/anielsen001/gps-sdr-sim)
+  - [LimeSDR video spoofing a phone](https://www.youtube.com/watch?v=fAaiNOZmM20)
+- [LimeGPS, LimeSDR version of GPS SDR sim, also archived](https://github.com/osqzss/LimeGPS)
+  - [anielsen001 fork](https://github.com/anielsen001/LimeGPS)
+- [Pokemon implementation of GPS SDR Sim](https://github.com/JiaoXianjun/poke-move)
+  - [anielsen001 fork](https://github.com/anielsen001/poke-move)
+- [Multi SDR GPS Sim](https://github.com/Mictronics/multi-sdr-gps-sim)
+	- cites [hrfGPS](https://github.com/IvanKor/hrfGPS) by Ivan Kor 
+- [GNSS SDR](https://gnss-sdr.org/)
+  - this is a receiver only
+- [GNSS SDRlib](https://github.com/taroz/GNSS-SDRLIB)
+
