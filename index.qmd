@@ -39,6 +39,16 @@ sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
 
+## Running simulation
+
+start the container
+```bash
+podman-compose -f compose.yml run limegps
+```
+you will drop to a shell prompt in the container. Run the simulator
+```bash
+/opt/LimeGPS -e brdc0350.18n -l 35.274,137.014,100
+```
 
 ## Reference projects
 
