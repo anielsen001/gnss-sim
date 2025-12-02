@@ -50,6 +50,8 @@ you will drop to a shell prompt in the container. Run the simulator
 /opt/LimeGPS -e brdc0350.18n -l 35.274,137.014,100
 ```
 
+LimeSDR Mine output power is 10 mW.
+
 ## Reference projects
 
 - [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
