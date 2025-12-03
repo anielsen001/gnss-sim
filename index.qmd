@@ -2,7 +2,11 @@
 title: "GNSS simulator"
 ---
 
-An attempt to make a GNSS SDR simulator and use it for testing [balloon tracker payloads](https://github.com/anielsen001/high-altitude-balloon). This is based on an archived [LimeGPS simulator](https://github.com/osqzss/LimeGPS) since I have a LimeSDR. I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:
+An attempt to make a GNSS SDR simulator and use it for testing [balloon tracker payloads](https://github.com/anielsen001/high-altitude-balloon). This is based on an archived [LimeGPS simulator](https://github.com/osqzss/LimeGPS) since I have a LimeSDR. 
+
+## Build and run container
+
+I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:
 ```bash
 podman-compose -f compose.yml build limegps
 ```
@@ -38,6 +42,10 @@ Reload the udev rules with
 sudo udevadm control --reload-rules
 sudo udevadm trigger
 ```
+
+## GPS Ephemeris files from NASA
+
+You will need space geodesy data from NASA. These are the ephemeris files that specify the satellite orbit. Foun at <https://cddis.nasa.gov/archive/gnss/data/daily/>. This does require registration for a free account. You can find details about the files at <https://www.earthdata.nasa.gov/data/space-geodesy-techniques/gnss/broadcast-ephemeris-data-product>. These files are updated hourly and ideally you want the most recent.
 
 ## Running simulation
 
