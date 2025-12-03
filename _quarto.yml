@@ -13,8 +13,10 @@ website:
   navbar:
     search: true
     left:
+      - href: https://apnielsen.com
+        text: My Home Page
       - href: index.qmd
-        text: Home
+        text: GNSS-SIM
     tools:
       - icon: github
         menu:
