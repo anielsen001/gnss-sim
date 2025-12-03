@@ -47,6 +47,10 @@ sudo udevadm trigger
 
 You will need space geodesy data from NASA. These are the ephemeris files that specify the satellite orbit. Foun at <https://cddis.nasa.gov/archive/gnss/data/daily/>. This does require registration for a free account. You can find details about the files at <https://www.earthdata.nasa.gov/data/space-geodesy-techniques/gnss/broadcast-ephemeris-data-product>. These files are updated hourly and ideally you want the most recent.
 
+- [CDDIS GNSS FAQ](https://forum.earthdata.nasa.gov/viewtopic.php?t=6696)
+
+For example there's an hourly file at <https://cddis.nasa.gov/archive/gnss/data/hourly/2025/337/hour3370.25n.gz> that can be used.
+
 ## Running simulation
 
 start the container
