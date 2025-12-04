@@ -66,6 +66,8 @@ LimeSDR Mine output power is 10 mW.
 
 ## Reference projects
 
+- [GNSS GPS SDR](https://github.com/JiaoXianjun/GNSS-GPS-SDR)
+  - this has replay capability, but not simulation
 - [GPS SDR Sim, archived project](https://github.com/osqzss/gps-sdr-sim)
   - [anielsen001 fork](https://github.com/anielsen001/gps-sdr-sim)
   - [LimeSDR video spoofing a phone](https://www.youtube.com/watch?v=fAaiNOZmM20)
