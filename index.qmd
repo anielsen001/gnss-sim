@@ -62,7 +62,33 @@ you will drop to a shell prompt in the container. Run the simulator
 /opt/LimeGPS -e brdc0350.18n -l 35.274,137.014,100
 ```
 
-LimeSDR Mine output power is 10 mW.
+LimeSDR Mini output maximum power is 10 mW. The LimeGPS executable allows you to specify the output gain using the `-a` flag. 
+
+## Testing
+
+Testing with [U4b balloon tracker](https://qrp-labs.com/u4b).
+
+Connected the LimeSDR directly to the U4b using 60 dB of attenuation and a DC block and successfully simulated a GPS position. 
+
+Run the container
+
+```bash
+podman-compose run limegps
+```
+
+In the container run the simulator
+
+```bash
+/opt/LimeGPS/LimeGPS -a 0.7 -e /opt/project/hour3370.25n 35.274,137.014,6400.00
+```
+
+:::{.callout-warning}
+It appears that the specified altitude is ignored and the simulated alitude is 10m, see this [GitHub issue](https://github.com/anielsen001/gnss-sim/issues/5).
+:::
+
+![LimeSDR Mini cabled to U4b balloon tracker](/_sources/LimeSDR_Mini_cabled_to_U4b_sm.jpg)
+
+![Putty connection to U4b in hardware test mode with simulator running](/_sources/u4b_hw_test_01.png)
 
 ## Reference projects
 
