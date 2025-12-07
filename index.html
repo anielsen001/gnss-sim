@@ -100,6 +100,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-TVY5RB2XSL"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-TVY5RB2XSL', { 'anonymize_ip': true});
+</script>
 
 
 <link rel="stylesheet" href="styles.css">
@@ -123,8 +132,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
+    <a class="nav-link" href="https://apnielsen.com"> 
+<span class="menu-text">My Home Page</span></a>
+  </li>  
+  <li class="nav-item">
     <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Home</span></a>
+<span class="menu-text">GNSS-SIM</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -157,7 +170,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#sec-usb-dev-access" id="toc-sec-usb-dev-access" class="nav-link active" data-scroll-target="#sec-usb-dev-access">USB device access</a></li>
+  <li><a href="#build-and-run-container" id="toc-build-and-run-container" class="nav-link active" data-scroll-target="#build-and-run-container">Build and run container</a></li>
+  <li><a href="#sec-usb-dev-access" id="toc-sec-usb-dev-access" class="nav-link" data-scroll-target="#sec-usb-dev-access">USB device access</a></li>
+  <li><a href="#gps-ephemeris-files-from-nasa" id="toc-gps-ephemeris-files-from-nasa" class="nav-link" data-scroll-target="#gps-ephemeris-files-from-nasa">GPS Ephemeris files from NASA</a></li>
+  <li><a href="#running-simulation" id="toc-running-simulation" class="nav-link" data-scroll-target="#running-simulation">Running simulation</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing">Testing</a></li>
   <li><a href="#reference-projects" id="toc-reference-projects" class="nav-link" data-scroll-target="#reference-projects">Reference projects</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/anielsen001/gnss-sim/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/anielsen001/gnss-sim/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/anielsen001/gnss-sim/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
@@ -184,13 +201,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>An attempt to make a GNSS SDR simulator and use it for testing <a href="https://github.com/anielsen001/high-altitude-balloon">balloon tracker payloads</a>. This is based on an archived <a href="https://github.com/osqzss/LimeGPS">LimeGPS simulator</a> since I have a LimeSDR. I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:</p>
+<p>An attempt to make a GNSS SDR simulator and use it for testing <a href="https://github.com/anielsen001/high-altitude-balloon">balloon tracker payloads</a>. This is based on an archived <a href="https://github.com/osqzss/LimeGPS">LimeGPS simulator</a> since I have a LimeSDR.</p>
+<section id="build-and-run-container" class="level2">
+<h2 class="anchored" data-anchor-id="build-and-run-container">Build and run container</h2>
+<p>I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">podman-compose</span> <span class="at">-f</span> compose.yml build limegps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>or pull the container</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">podman</span> pull ghcr.io/anielsen001/gnss-sim:latest</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>and run it</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">podman-compose</span> <span class="at">-f</span> compose.yml run limegps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>you can likely substitute <code>docker</code> for <code>podman</code>.</p>
+</section>
 <section id="sec-usb-dev-access" class="level2">
 <h2 class="anchored" data-anchor-id="sec-usb-dev-access">USB device access</h2>
 <p>With podman you need to set udev access to the usb devices for your user. On my host system I have ubuntu 24.04 which does not currently (30 Nov 2025) have a <code>limesuite-udev</code> pacakge on the myriadrf ppa. However <a href="https://github.com/myriadrf/LimeSuite/blob/master/udev-rules/64-limesuite.rules">myriadrf/LimeSuite github</a> has a set of udev rules that you can use to create the udev rules for the LimeSDR.</p>
@@ -206,9 +227,63 @@ SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE="0666"
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> udevadm control <span class="at">--reload-rules</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> udevadm trigger</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
+<section id="gps-ephemeris-files-from-nasa" class="level2">
+<h2 class="anchored" data-anchor-id="gps-ephemeris-files-from-nasa">GPS Ephemeris files from NASA</h2>
+<p>You will need space geodesy data from NASA. These are the ephemeris files that specify the satellite orbit. Foun at <a href="https://cddis.nasa.gov/archive/gnss/data/daily/" class="uri">https://cddis.nasa.gov/archive/gnss/data/daily/</a>. This does require registration for a free account. You can find details about the files at <a href="https://www.earthdata.nasa.gov/data/space-geodesy-techniques/gnss/broadcast-ephemeris-data-product" class="uri">https://www.earthdata.nasa.gov/data/space-geodesy-techniques/gnss/broadcast-ephemeris-data-product</a>. These files are updated hourly and ideally you want the most recent.</p>
+<ul>
+<li><a href="https://forum.earthdata.nasa.gov/viewtopic.php?t=6696">CDDIS GNSS FAQ</a></li>
+</ul>
+<p>For example there’s an hourly file at <a href="https://cddis.nasa.gov/archive/gnss/data/hourly/2025/337/hour3370.25n.gz" class="uri">https://cddis.nasa.gov/archive/gnss/data/hourly/2025/337/hour3370.25n.gz</a> that can be used.</p>
+</section>
+<section id="running-simulation" class="level2">
+<h2 class="anchored" data-anchor-id="running-simulation">Running simulation</h2>
+<p>start the container</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">podman-compose</span> <span class="at">-f</span> compose.yml run limegps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>you will drop to a shell prompt in the container. Run the simulator</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/LimeGPS</span> <span class="at">-e</span> brdc0350.18n <span class="at">-l</span> 35.274,137.014,100</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>LimeSDR Mini output maximum power is 10 mW. The LimeGPS executable allows you to specify the output gain using the <code>-a</code> flag.</p>
+</section>
+<section id="testing" class="level2">
+<h2 class="anchored" data-anchor-id="testing">Testing</h2>
+<p>Testing with <a href="https://qrp-labs.com/u4b">U4b balloon tracker</a>.</p>
+<p>Connected the LimeSDR directly to the U4b using 60 dB of attenuation and a DC block and successfully simulated a GPS position.</p>
+<p>Run the container</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">podman-compose</span> run limegps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>In the container run the simulator</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/opt/LimeGPS/LimeGPS</span> <span class="at">-a</span> 0.7 <span class="at">-e</span> /opt/project/hour3370.25n 35.274,137.014,6400.00</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It appears that the specified altitude is ignored and the simulated alitude is 10m, see this <a href="https://github.com/anielsen001/gnss-sim/issues/5">GitHub issue</a>.</p>
+</div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./_sources/LimeSDR_Mini_cabled_to_U4b_sm.jpg" class="img-fluid figure-img"></p>
+<figcaption>LimeSDR Mini cabled to U4b balloon tracker</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="./_sources/u4b_hw_test_01.png" class="img-fluid figure-img"></p>
+<figcaption>Putty connection to U4b in hardware test mode with simulator running</figcaption>
+</figure>
+</div>
+</section>
 <section id="reference-projects" class="level2">
 <h2 class="anchored" data-anchor-id="reference-projects">Reference projects</h2>
 <ul>
+<li><a href="https://github.com/JiaoXianjun/GNSS-GPS-SDR">GNSS GPS SDR</a>
+<ul>
+<li>this has replay capability, but not simulation</li>
+</ul></li>
 <li><a href="https://github.com/osqzss/gps-sdr-sim">GPS SDR Sim, archived project</a>
 <ul>
 <li><a href="https://github.com/anielsen001/gps-sdr-sim">anielsen001 fork</a></li>
@@ -327,7 +402,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
+      var filterRegex = new RegExp("https:\/\/anielsen001\.github\.io\/gnss-sim\/");
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

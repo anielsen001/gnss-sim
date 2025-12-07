@@ -4,7 +4,14 @@
     "href": "index.html",
     "title": "GNSS simulator",
     "section": "",
-    "text": "An attempt to make a GNSS SDR simulator and use it for testing balloon tracker payloads. This is based on an archived LimeGPS simulator since I have a LimeSDR. I built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:\nor pull the container\nand run it\nyou can likely substitute docker for podman."
+    "text": "An attempt to make a GNSS SDR simulator and use it for testing balloon tracker payloads. This is based on an archived LimeGPS simulator since I have a LimeSDR."
+  },
+  {
+    "objectID": "index.html#build-and-run-container",
+    "href": "index.html#build-and-run-container",
+    "title": "GNSS simulator",
+    "section": "Build and run container",
+    "text": "Build and run container\nI built a podman container based on ubuntu 22.04 and installed the dependencies into it. Obtain the container by building:\npodman-compose -f compose.yml build limegps\nor pull the container\npodman pull ghcr.io/anielsen001/gnss-sim:latest\nand run it\npodman-compose -f compose.yml run limegps\nyou can likely substitute docker for podman."
   },
   {
     "objectID": "index.html#sec-usb-dev-access",
@@ -14,11 +21,32 @@
     "text": "USB device access\nWith podman you need to set udev access to the usb devices for your user. On my host system I have ubuntu 24.04 which does not currently (30 Nov 2025) have a limesuite-udev pacakge on the myriadrf ppa. However myriadrf/LimeSuite github has a set of udev rules that you can use to create the udev rules for the LimeSDR.\nCopy this set of rules into /dev/udev/rules.d/64-limesuite.rules.\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"04b4\", ATTR{idProduct}==\"8613\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"04b4\", ATTR{idProduct}==\"00f1\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"0403\", ATTR{idProduct}==\"601f\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"usb\", ATTR{idVendor}==\"1d50\", ATTR{idProduct}==\"6108\", SYMLINK+=\"stream-%k\", MODE=\"666\"\nSUBSYSTEM==\"xillybus\", MODE=\"666\"\n\nSUBSYSTEM==\"tty\", ATTRS{idVendor}==\"0403\", ATTRS{idProduct}==\"6001\", MODE=\"0666\"\nReload the udev rules with\nsudo udevadm control --reload-rules\nsudo udevadm trigger"
   },
   {
+    "objectID": "index.html#gps-ephemeris-files-from-nasa",
+    "href": "index.html#gps-ephemeris-files-from-nasa",
+    "title": "GNSS simulator",
+    "section": "GPS Ephemeris files from NASA",
+    "text": "GPS Ephemeris files from NASA\nYou will need space geodesy data from NASA. These are the ephemeris files that specify the satellite orbit. Foun at https://cddis.nasa.gov/archive/gnss/data/daily/. This does require registration for a free account. You can find details about the files at https://www.earthdata.nasa.gov/data/space-geodesy-techniques/gnss/broadcast-ephemeris-data-product. These files are updated hourly and ideally you want the most recent.\n\nCDDIS GNSS FAQ\n\nFor example there’s an hourly file at https://cddis.nasa.gov/archive/gnss/data/hourly/2025/337/hour3370.25n.gz that can be used."
+  },
+  {
+    "objectID": "index.html#running-simulation",
+    "href": "index.html#running-simulation",
+    "title": "GNSS simulator",
+    "section": "Running simulation",
+    "text": "Running simulation\nstart the container\npodman-compose -f compose.yml run limegps\nyou will drop to a shell prompt in the container. Run the simulator\n/opt/LimeGPS -e brdc0350.18n -l 35.274,137.014,100\nLimeSDR Mini output maximum power is 10 mW. The LimeGPS executable allows you to specify the output gain using the -a flag."
+  },
+  {
+    "objectID": "index.html#testing",
+    "href": "index.html#testing",
+    "title": "GNSS simulator",
+    "section": "Testing",
+    "text": "Testing\nTesting with U4b balloon tracker.\nConnected the LimeSDR directly to the U4b using 60 dB of attenuation and a DC block and successfully simulated a GPS position.\nRun the container\npodman-compose run limegps\nIn the container run the simulator\n/opt/LimeGPS/LimeGPS -a 0.7 -e /opt/project/hour3370.25n 35.274,137.014,6400.00\n\n\n\n\n\n\nWarning\n\n\n\nIt appears that the specified altitude is ignored and the simulated alitude is 10m, see this GitHub issue.\n\n\n\n\n\nLimeSDR Mini cabled to U4b balloon tracker\n\n\n\n\n\nPutty connection to U4b in hardware test mode with simulator running"
+  },
+  {
     "objectID": "index.html#reference-projects",
     "href": "index.html#reference-projects",
     "title": "GNSS simulator",
     "section": "Reference projects",
-    "text": "Reference projects\n\nGPS SDR Sim, archived project\n\nanielsen001 fork\nLimeSDR video spoofing a phone\n\nLimeGPS, LimeSDR version of GPS SDR sim, also archived\n\nanielsen001 fork\n\nPokemon implementation of GPS SDR Sim\n\nanielsen001 fork\n\nMulti SDR GPS Sim\n\ncites hrfGPS by Ivan Kor\n\nGNSS SDR\n\nthis is a receiver only\n\nGNSS SDRlib"
+    "text": "Reference projects\n\nGNSS GPS SDR\n\nthis has replay capability, but not simulation\n\nGPS SDR Sim, archived project\n\nanielsen001 fork\nLimeSDR video spoofing a phone\n\nLimeGPS, LimeSDR version of GPS SDR sim, also archived\n\nanielsen001 fork\n\nPokemon implementation of GPS SDR Sim\n\nanielsen001 fork\n\nMulti SDR GPS Sim\n\ncites hrfGPS by Ivan Kor\n\nGNSS SDR\n\nthis is a receiver only\n\nGNSS SDRlib"
   },
   {
     "objectID": "about.html",
