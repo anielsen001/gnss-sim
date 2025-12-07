@@ -6,6 +6,8 @@ website:
   
   repo-url: https://github.com/anielsen001/gnss-sim
   repo-actions: [edit, source, issue]
+
+  google-analytics: "G-TVY5RB2XSL"
   
   page-footer: "Copyright 2025, Aaron Nielsen"
 
@@ -25,18 +27,7 @@ website:
           - text: Issue
             href: https://github.com/anielsen001/gnss-sim/issues
 
-  # sidebar:
-  #   search: true
-  #   tools:
-  #     - icon: github
-  #       menu:
-  #         - text: Source
-  #           href: https://github.com/anielsen001/gnss-sim
-  #         - text: Issue
-  #           href: https://github.com/anielsen001/gnss-sim/issues
-  #   contents:
-  #     - href: index.qmd
-  #       text: Home
+
 
 execute:
   freeze: true
